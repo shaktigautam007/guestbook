@@ -32,14 +32,14 @@ public class GuestEntryController {
 
     @PostMapping("/saveGuestEntry")
     public String saveGuestEntry(@ModelAttribute("guestEntryDto") GuestEntryDto guestEntryDto) {
-        // save employee to database
+        // save entry to database
         guestEntryService.saveGuestEntry(guestEntryDto);
         return "redirect:/";
     }
 
     @PostMapping("/modifyGuestEntry")
     public String modifyGuestEntry(@ModelAttribute("guestEntryDto") GuestEntryDto guestEntryDto) {
-        // save employee to database
+        // save entry to database
         guestEntryService.modifyGuestEntry(guestEntryDto);
         return "redirect:/";
     }
@@ -47,7 +47,6 @@ public class GuestEntryController {
     @GetMapping("/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
 
-        // get employee from the service
         GuestEntry guestEntry = guestEntryService.getGuestEntryById(id);
         GuestEntryDto  guestEntryDto = new GuestEntryDto();
         guestEntryDto.setId(guestEntry.getId());
@@ -62,14 +61,12 @@ public class GuestEntryController {
     @GetMapping("/deleteEntry/{id}")
     public String deleteEntry(@PathVariable(value = "id") long id) {
 
-        // call delete employee method
         this.guestEntryService.deleteGuestEntryById(id);
         return "redirect:/";
     }
     @GetMapping("/approveEntry/{id}")
     public String approveEntry(@PathVariable(value = "id") long id) {
 
-        // call delete employee method
         this.guestEntryService.approveGuestEntryById(id);
         return "redirect:/";
     }
