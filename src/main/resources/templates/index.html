@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>GuestBook App</title>
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+</head>
+<body>
+<!-- create navigation bar ( header) -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">GuestBook App</a>
+        </div>
+
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+     &nbsp;  Welcome <span sec:authentication="principal.username"> User</span>
+</div>
+
+<div class="container">
+
+    <div class="container">
+
+        <h3>All GuestBook Entries</h3>
+
+        <hr/>
+
+        <a sec:authorize="hasAuthority('ROLE_USER')" th:href="@{/showNewGuestEntryForm/{id}(id=${#authentication.principal.username})}" class="btn btn-primary btn-sm mb-3"> Add New GuestBook Entry </a>
+
+
+
+        <table class="table table-bordered table-striped">
+
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th>Entry Text</th>
+                <th>Created By</th>
+                <th>Entry Status</th>
+                <th sec:authorize="hasAuthority('ROLE_ADMIN')"> Actions </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="entry: ${entries}">
+                <th scope="row"><img alt="" th:src="*{'data:image/jpeg;base64,'+{entry.image}}" style="width: 100px;height: 100px;"></th>
+                <td th:text="${entry.notesText}" />
+                <td th:text="${entry.createdBy}" />
+                <td th:text="${entry.status}" />
+                <td sec:authorize="hasAuthority('ROLE_ADMIN')"> <a th:href="@{/showFormForUpdate/{id}(id=${entry.id})}" class="btn btn-primary">Update</a>
+                     <a th:href="@{/deleteEntry/{id}(id=${entry.id})}" class="btn btn-danger">Delete</a>
+                     <a th:href="@{/approveEntry/{id}(id=${entry.id})}" class="btn btn-danger">Approve</a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Add new Entry</title>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+  <hr>
+  <h2>Please make new entry!!</h2>
+
+  <form action="#" th:action="@{/saveGuestEntry}" th:object="${guestEntryDto}"
+        method="POST" enctype="multipart/form-data">
+    <input type="text" th:field="*{text}"
+           placeholder="Notes Text" class="form-control mb-4 col-4">
+
+    <input type="text" th:field="*{createdBy}"
+           readonly class="form-control mb-4 col-4">
+
+    <div class="custom-file mb-4">
+      <input type="file" name="file" class="custom-file-input" th:field="*{file}" id="customFile"> <label class="custom-file-label"
+                                     for="customFile">Product Image</label>
+    </div>
+
+    <button type="submit" class="btn btn-info col-2"> Save GuestBook Entry</button>
+  </form>
+
+  <hr>
+
+  <a th:href = "@{/}"> Back to All GuestBook Entries</a>
+</div>
+</body>
+</html>
