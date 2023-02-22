@@ -3,9 +3,11 @@ package com.guestbook.guestbook.service;
 import com.guestbook.guestbook.dto.GuestEntryDto;
 import com.guestbook.guestbook.model.GuestEntry;
 import com.guestbook.guestbook.repository.GuestEntryRepo;
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -30,20 +32,19 @@ public class GuestEntryServiceImpl implements GuestEntryService{
         entry.setCreatedBy(guestEntryDto.getCreatedBy());
         entry.setStatus("SUBMITTED");
         // file code
-        String fileName = StringUtils.cleanPath(guestEntryDto.getFile().getOriginalFilename());
-        System.out.println("File Name =="+fileName);
-        System.out.println("File Name =="+guestEntryDto.getFile().getSize());
-
-
-        if(!fileName.contains("jpg"))
-        {
-            System.out.println("not a a valid file");
-            return "invalidfile";
-        }
-        try {
+        MultipartFile file = guestEntryDto.getFile();
+        if(file!=null){
+            try {
+            Tika tika = new Tika();
+            String detectedType = tika.detect(file.getBytes());
+            long fileSizeKB = file.getSize() / 1024;
+            System.out.println("detected type == "+detectedType);
+            System.out.println("fileSizeKB == "+fileSizeKB);
             entry.setImage(Base64.getEncoder().encodeToString(guestEntryDto.getFile().getBytes()));
-        } catch (IOException e) {
-            e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
 
         this.guestEntryRepo.save(entry);

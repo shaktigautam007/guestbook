@@ -33,7 +33,7 @@ public class GuestEntryController {
     @PostMapping("/saveGuestEntry")
     public String saveGuestEntry(@ModelAttribute("guestEntryDto") GuestEntryDto guestEntryDto) {
         // save entry to database
-        guestEntryService.saveGuestEntry(guestEntryDto);
+        String entry = guestEntryService.saveGuestEntry(guestEntryDto);
         return "redirect:/";
     }
 
