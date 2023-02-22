@@ -13,6 +13,15 @@
   <hr>
   <h2>Please make new entry!!</h2>
 
+  <!-- success message -->
+  <div th:if="${param.invalidfile}">
+    <div class="alert alert-info">Please upload JPEG file !!!!</div>
+  </div>
+
+  <div th:if="${param.filesizetoobig}">
+    <div class="alert alert-info">Please upload file size upto 100KB !!</div>
+  </div>
+
   <form action="#" th:action="@{/saveGuestEntry}" th:object="${guestEntryDto}"
         method="POST" enctype="multipart/form-data">
     <input type="text" th:field="*{text}"

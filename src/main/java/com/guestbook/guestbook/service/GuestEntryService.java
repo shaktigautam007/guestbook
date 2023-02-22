@@ -7,8 +7,8 @@ import java.util.Collection;
 import java.util.List;
 
 public interface GuestEntryService {
-    public List<GuestEntry> getAllGuestEntries();
-    void saveGuestEntry(GuestEntryDto employee);
+    List<GuestEntry> getAllGuestEntries();
+    String saveGuestEntry(GuestEntryDto employee);
     GuestEntry getGuestEntryById(long id);
     void deleteGuestEntryById(long id);
 

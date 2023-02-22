@@ -24,16 +24,21 @@ public class GuestEntryServiceImpl implements GuestEntryService{
     }
 
     @Override
-    public void saveGuestEntry(GuestEntryDto guestEntryDto) {
+    public String saveGuestEntry(GuestEntryDto guestEntryDto) {
         GuestEntry entry = new GuestEntry();
         entry.setNotesText(guestEntryDto.getText());
         entry.setCreatedBy(guestEntryDto.getCreatedBy());
         entry.setStatus("SUBMITTED");
         // file code
         String fileName = StringUtils.cleanPath(guestEntryDto.getFile().getOriginalFilename());
-        if(fileName.contains(".."))
+        System.out.println("File Name =="+fileName);
+        System.out.println("File Name =="+guestEntryDto.getFile().getSize());
+
+
+        if(!fileName.contains("jpg"))
         {
             System.out.println("not a a valid file");
+            return "invalidfile";
         }
         try {
             entry.setImage(Base64.getEncoder().encodeToString(guestEntryDto.getFile().getBytes()));
@@ -42,6 +47,7 @@ public class GuestEntryServiceImpl implements GuestEntryService{
         }
 
         this.guestEntryRepo.save(entry);
+        return "success";
     }
 
     @Override
@@ -65,7 +71,6 @@ public class GuestEntryServiceImpl implements GuestEntryService{
     public void modifyGuestEntry(GuestEntryDto guestEntryDto) {
         GuestEntry guestEntry = this.guestEntryRepo.findById(guestEntryDto.getId()).get();
         guestEntry.setNotesText(guestEntryDto.getText());
-        guestEntry.setStatus(guestEntryDto.getStatus());
         guestEntry.setCreatedBy(guestEntryDto.getCreatedBy());
         this.guestEntryRepo.save(guestEntry);
     }
