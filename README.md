@@ -18,6 +18,14 @@ User Landing Page Post Login
 Add Entry Screen
 ![AddGuestEntryPage](https://user-images.githubusercontent.com/24388906/220672712-d6bedf8f-1169-434b-9907-2971b6ad148b.PNG)
 
+Error on adding entry when invalid file format
+![Error_invali_file](https://user-images.githubusercontent.com/24388906/220842951-df3e9647-4b38-44ca-9f49-4c9e85632142.PNG)
+
+Error on adding entry when file size too big
+![file_too_big](https://user-images.githubusercontent.com/24388906/220843034-efe94153-9579-4640-a47b-477bcffb8eb6.PNG)
+
+
+
 Admin Landing Page
 ![Admin_Home](https://user-images.githubusercontent.com/24388906/220672749-5c3d7248-f6d2-4e1c-8e3f-afb3f386d021.PNG)
 
