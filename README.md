@@ -16,14 +16,13 @@ User Landing Page Post Login
 ![User_Home](https://user-images.githubusercontent.com/24388906/220672628-8a14eb98-3c1a-4f65-93db-236caee91661.PNG)
 
 Add Entry Screen
-![AddGuestEntryPage](https://user-images.githubusercontent.com/24388906/220672712-d6bedf8f-1169-434b-9907-2971b6ad148b.PNG)
+![AddGuestEntryPage](https://user-images.githubusercontent.com/24388906/220866389-d3e10b89-4a4b-4ba8-934d-979b9d371594.PNG)
 
 Error on adding entry when invalid file format
-![Error_invali_file](https://user-images.githubusercontent.com/24388906/220842951-df3e9647-4b38-44ca-9f49-4c9e85632142.PNG)
+![Error_invali_file](https://user-images.githubusercontent.com/24388906/220866480-f1ec6b02-9974-4d4c-a748-36d381fefe09.PNG)
 
 Error on adding entry when file size too big
-![file_too_big](https://user-images.githubusercontent.com/24388906/220843034-efe94153-9579-4640-a47b-477bcffb8eb6.PNG)
-
+![file_too_big](https://user-images.githubusercontent.com/24388906/220866540-d1f43f70-3dd9-4e0c-a91b-076469421bca.PNG)
 
 Admin Landing Page
 ![Admin_Home](https://user-images.githubusercontent.com/24388906/220672749-5c3d7248-f6d2-4e1c-8e3f-afb3f386d021.PNG)
