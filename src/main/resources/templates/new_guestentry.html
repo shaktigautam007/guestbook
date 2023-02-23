@@ -13,6 +13,14 @@
   <hr>
   <h2>Please make new entry!!</h2>
 
+  <div th:if="${param.notjpegimage}">
+    <div class="alert alert-info">Please upload image in JPEG format !!</div>
+  </div>
+
+  <div th:if="${param.toobig}">
+    <div class="alert alert-info">Please upload JPEG image upto 250KB !!</div>
+  </div>
+
   <!-- success message -->
 
   <form action="#" th:action="@{/saveGuestEntry}" th:object="${guestEntryDto}"

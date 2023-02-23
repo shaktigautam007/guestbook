@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import static com.guestbook.guestbook.dto.GuestBookConstants.*;
+
 @Service
 public class GuestEntryServiceImpl implements GuestEntryService{
 
@@ -32,19 +34,22 @@ public class GuestEntryServiceImpl implements GuestEntryService{
         entry.setCreatedBy(guestEntryDto.getCreatedBy());
         entry.setStatus("SUBMITTED");
         // file code
+        try {
+        Tika tika = new Tika();
         MultipartFile file = guestEntryDto.getFile();
-        if(file!=null){
-            try {
-            Tika tika = new Tika();
-            String detectedType = tika.detect(file.getBytes());
-            long fileSizeKB = file.getSize() / 1024;
-            System.out.println("detected type == "+detectedType);
-            System.out.println("fileSizeKB == "+fileSizeKB);
+        String detectedType = tika.detect(file.getBytes());
+        long fileSizeKB = file.getSize() / 1024;
+        if(fileSizeKB!=0L){
+            if(!detectedType.equalsIgnoreCase(IMAGE_TYPE_JPEG)){
+                return NOT_JPEG_IMAGE;
+            } else if (fileSizeKB > 250L) {
+                return IMAGE_TOO_BIG;
+            }
             entry.setImage(Base64.getEncoder().encodeToString(guestEntryDto.getFile().getBytes()));
-            } catch (IOException e) {
-                e.printStackTrace();
             }
 
+        }catch (IOException e) {
+            e.printStackTrace();
         }
 
         this.guestEntryRepo.save(entry);

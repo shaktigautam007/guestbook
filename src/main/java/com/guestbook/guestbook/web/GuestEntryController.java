@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import static com.guestbook.guestbook.dto.GuestBookConstants.NOT_JPEG_IMAGE;
+import static com.guestbook.guestbook.dto.GuestBookConstants.IMAGE_TOO_BIG;
+
 
 @Controller
 public class GuestEntryController {
@@ -33,7 +36,13 @@ public class GuestEntryController {
     @PostMapping("/saveGuestEntry")
     public String saveGuestEntry(@ModelAttribute("guestEntryDto") GuestEntryDto guestEntryDto) {
         // save entry to database
-        String entry = guestEntryService.saveGuestEntry(guestEntryDto);
+        String entry_message = guestEntryService.saveGuestEntry(guestEntryDto);
+        if(entry_message.equalsIgnoreCase(NOT_JPEG_IMAGE)){
+            return "redirect:/showNewGuestEntryForm/"+guestEntryDto.getCreatedBy()+"?notjpegimage";
+        } else if (entry_message.equalsIgnoreCase(IMAGE_TOO_BIG)) {
+            return "redirect:/showNewGuestEntryForm/"+guestEntryDto.getCreatedBy()+"?toobig";
+        }
+
         return "redirect:/";
     }
 
