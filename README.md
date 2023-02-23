@@ -25,9 +25,8 @@ Error on adding entry when file size too big
 ![file_too_big](https://user-images.githubusercontent.com/24388906/220843034-efe94153-9579-4640-a47b-477bcffb8eb6.PNG)
 
 
-
 Admin Landing Page
 ![Admin_Home](https://user-images.githubusercontent.com/24388906/220672749-5c3d7248-f6d2-4e1c-8e3f-afb3f386d021.PNG)
 
 Admin entry update screen
-![Admin_Update](https://user-images.githubusercontent.com/24388906/220672950-459adfd4-5846-4b43-a947-4714240ec8aa.PNG)
+![Admin_Update](https://user-images.githubusercontent.com/24388906/220863242-8b78892f-0771-47d5-afbb-8b405f596078.PNG)
