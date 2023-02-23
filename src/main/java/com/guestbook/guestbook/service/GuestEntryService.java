@@ -11,8 +11,6 @@ public interface GuestEntryService {
     String saveGuestEntry(GuestEntryDto employee);
     GuestEntry getGuestEntryById(long id);
     void deleteGuestEntryById(long id);
-
-    void modifyGuestEntry(GuestEntryDto guestEntryDto);
-
+    String modifyGuestEntry(GuestEntryDto guestEntryDto);
     void approveGuestEntryById(long id);
 }

@@ -11,9 +11,16 @@
 <div class="container">
     <hr>
     <h2>Update GuestBook Entry</h2>
+    <div th:if="${param.notjpegimage}">
+        <div class="alert alert-info">Please upload image in JPEG format !!</div>
+    </div>
+
+    <div th:if="${param.toobig}">
+        <div class="alert alert-info">Please upload JPEG image upto 250KB !!</div>
+    </div>
 
     <form action="#" th:action="@{/modifyGuestEntry}" th:object="${guestEntryDto}"
-          method="POST">
+          method="POST" enctype="multipart/form-data">
 
         <!-- Add hidden form field to handle update -->
         <input type="hidden" th:field="*{id}" />
@@ -21,6 +28,11 @@
         <input type="text" th:field="*{text}" class="form-control mb-4 col-4">
 
         <input type="text" th:field="*{createdBy}" class="form-control mb-4 col-4">
+
+        <div class="custom-file mb-4">
+            <input type="file" name="file" class="custom-file-input" th:field="*{file}" id="customFile"> <label class="custom-file-label"
+                                                                                                                for="customFile">Update Image</label>
+        </div>
 
         <button type="submit" class="btn btn-info col-2"> Update Entry</button>
     </form>

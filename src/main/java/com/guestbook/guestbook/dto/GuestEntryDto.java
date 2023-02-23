@@ -16,4 +16,6 @@ public class GuestEntryDto {
     private Long id ;
     private String status;
 
+    private String image;
+
 }

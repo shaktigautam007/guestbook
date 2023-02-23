@@ -49,7 +49,13 @@ public class GuestEntryController {
     @PostMapping("/modifyGuestEntry")
     public String modifyGuestEntry(@ModelAttribute("guestEntryDto") GuestEntryDto guestEntryDto) {
         // save entry to database
-        guestEntryService.modifyGuestEntry(guestEntryDto);
+        String modifyStatus = guestEntryService.modifyGuestEntry(guestEntryDto);
+        if(modifyStatus.equalsIgnoreCase(NOT_JPEG_IMAGE)){
+            return "redirect:/showFormForUpdate/"+guestEntryDto.getId()+"?notjpegimage";
+        } else if (modifyStatus.equalsIgnoreCase(IMAGE_TOO_BIG)) {
+            return "redirect:/showFormForUpdate/"+guestEntryDto.getId()+"?toobig";
+        }
+
         return "redirect:/";
     }
 
@@ -62,6 +68,7 @@ public class GuestEntryController {
         guestEntryDto.setStatus(guestEntry.getStatus());
         guestEntryDto.setCreatedBy(guestEntry.getCreatedBy());
         guestEntryDto.setText(guestEntry.getNotesText());
+        guestEntryDto.setImage(guestEntry.getImage());
         // set employee as a model attribute to pre-populate the form
         model.addAttribute("guestEntryDto", guestEntryDto);
         return "update_guestbookentry";

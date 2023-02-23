@@ -34,24 +34,17 @@ public class GuestEntryServiceImpl implements GuestEntryService{
         entry.setCreatedBy(guestEntryDto.getCreatedBy());
         entry.setStatus("SUBMITTED");
         // file code
-        try {
-        Tika tika = new Tika();
         MultipartFile file = guestEntryDto.getFile();
-        String detectedType = tika.detect(file.getBytes());
         long fileSizeKB = file.getSize() / 1024;
         if(fileSizeKB!=0L){
-            if(!detectedType.equalsIgnoreCase(IMAGE_TYPE_JPEG)){
-                return NOT_JPEG_IMAGE;
-            } else if (fileSizeKB > 250L) {
-                return IMAGE_TOO_BIG;
+            String validationStatus = this.validateFileUpload(file);
+            if(!validationStatus.equalsIgnoreCase(SUCCESS))return validationStatus;
+            try {
+                entry.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            entry.setImage(Base64.getEncoder().encodeToString(guestEntryDto.getFile().getBytes()));
-            }
-
-        }catch (IOException e) {
-            e.printStackTrace();
         }
-
         this.guestEntryRepo.save(entry);
         return "success";
     }
@@ -74,15 +67,48 @@ public class GuestEntryServiceImpl implements GuestEntryService{
     }
 
     @Override
-    public void modifyGuestEntry(GuestEntryDto guestEntryDto) {
+    public String modifyGuestEntry(GuestEntryDto guestEntryDto) {
         GuestEntry guestEntry = this.guestEntryRepo.findById(guestEntryDto.getId()).get();
         guestEntry.setNotesText(guestEntryDto.getText());
         guestEntry.setCreatedBy(guestEntryDto.getCreatedBy());
+        MultipartFile file = guestEntryDto.getFile();
+        long fileSizeKB = file.getSize() / 1024;
+        if(fileSizeKB!=0L){
+            String validationStatus = this.validateFileUpload(file);
+            if(!validationStatus.equalsIgnoreCase(SUCCESS))return validationStatus;
+            try {
+                guestEntry.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         this.guestEntryRepo.save(guestEntry);
+        return SUCCESS;
     }
 
     @Override
     public void approveGuestEntryById(long id) {
         this.guestEntryRepo.approveGuestEntry("APPROVED",id);
     }
+
+    private String validateFileUpload(MultipartFile file){
+        try {
+            Tika tika = new Tika();
+            String detectedType = tika.detect(file.getBytes());
+            long fileSizeKB = file.getSize() / 1024;
+            if(fileSizeKB!=0L){
+                if(!detectedType.equalsIgnoreCase(IMAGE_TYPE_JPEG)){
+                    return NOT_JPEG_IMAGE;
+                } else if (fileSizeKB > 250L) {
+                    return IMAGE_TOO_BIG;
+                }
+                else return SUCCESS;
+            }
+
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  SUCCESS;
+    }
+
 }
